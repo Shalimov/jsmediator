@@ -1,4 +1,4 @@
-(function (global) {
+(function(global) {
   'use strict';
 
   function EventEmitter() {
@@ -23,7 +23,7 @@
         try {
           handler.apply(this, arguments);
         } finally {
-          self.off(eventName, fakeHandler);
+          self.off(eventName, decorator);
         }
       }
     },
