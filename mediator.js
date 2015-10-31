@@ -50,6 +50,12 @@
 
     getMetaRegistredDeps: function() {
       return this._deps;
+    },
+
+    shareResponsibility: function(mediator) {
+      if (mediator instanceof Mediator) {
+        this._eventEmitter = mediator._eventEmitter;
+      }
     }
   });
 
