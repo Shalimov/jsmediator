@@ -88,13 +88,13 @@ describe('Mediator spec', function () {
     var toaster = smartHouseMediator.getComponent('Toaster').toaster;
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
-    toaster.makeToast.called.should.not.be.true();
-    coffeeMachine.makeCoffee.should.not.be.true();
+    toaster.makeToast.called.should.be.True;
+    coffeeMachine.makeCoffee.should.be.True;
 
     alarm.doAlarm();
 
-    toaster.makeToast.calledOnce.should.be.true();
-    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+    toaster.makeToast.calledOnce.should.be.True;
+    coffeeMachine.makeCoffee.calledOnce.should.be.True;
   });
 
   it('should #removeComponent and unsubscribe from events', function () {
@@ -106,20 +106,20 @@ describe('Mediator spec', function () {
     var toaster = smartHouseMediator.getComponent('Toaster').toaster;
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
-    toaster.makeToast.called.should.not.be.true();
-    coffeeMachine.makeCoffee.should.not.be.true();
+    toaster.makeToast.called.should.be.False;
+    coffeeMachine.makeCoffee.should.be.False;
 
     alarm.doAlarm();
 
-    toaster.makeToast.calledOnce.should.be.true();
-    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+    toaster.makeToast.calledOnce.should.be.True;
+    coffeeMachine.makeCoffee.calledOnce.should.be.True;
 
     smartHouseMediator.removeComponent('CoffeeMachine').should.be.true();
 
     alarm.doAlarm();
 
-    toaster.makeToast.calledTwice.should.be.true();
-    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+    toaster.makeToast.calledTwice.should.be.True;
+    coffeeMachine.makeCoffee.calledOnce.should.be.True;
   });
 
 
@@ -132,13 +132,13 @@ describe('Mediator spec', function () {
     var toaster = smartHouseMediator.getComponent('Toaster').toaster;
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
-    toaster.makeToast.called.should.not.be.true();
-    coffeeMachine.makeCoffee.should.not.be.true();
+    toaster.makeToast.called.should.be.False;
+    coffeeMachine.makeCoffee.should.be.False;
 
     alarm.doAlarm();
 
-    toaster.makeToast.calledOnce.should.be.true();
-    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+    toaster.makeToast.calledOnce.should.be.True;
+    coffeeMachine.makeCoffee.calledOnce.should.be.True;
 
     smartHouseMediator.removeComponent('Alarm').should.be.true();
 
@@ -146,5 +146,42 @@ describe('Mediator spec', function () {
 
     toaster.makeToast.calledOnce.should.be.true();
     coffeeMachine.makeCoffee.calledOnce.should.be.true();
+  });
+
+  it('should #getComponent by name or return undefinded if component does not exist', function () {
+    smartHouseMediator.addComponent('CoffeeMachine', coffeeMachineRegisterFn);
+    smartHouseMediator.addComponent('Toaster', toasterMachineRegisterFn);
+
+    var toasterComponent = smartHouseMediator.getComponent('Toaster');
+    toasterComponent.should.be.an.Object;
+
+    var fakeComponent = smartHouseMediator.getComponent('Halo');
+    should(fakeComponent).be.an.Undefined;
+  });
+
+  it('should check for component existance by using #hasComponent', function () {
+    smartHouseMediator.addComponent('CoffeeMachine', coffeeMachineRegisterFn);
+
+    smartHouseMediator.hasComponent('Toaster').should.be.False;
+    smartHouseMediator.hasComponent('CoffeeMachine').should.be.True;
+  });
+
+  it('should list of string names with all registered component', function () {
+    smartHouseMediator.componentsList().should.have.length(0);
+
+    smartHouseMediator.addComponent('CoffeeMachine', coffeeMachineRegisterFn);
+    smartHouseMediator.addComponent('Toaster', coffeeMachineRegisterFn);
+
+    smartHouseMediator.componentsList().should.have.length(2);
+    smartHouseMediator.componentsList().should.be.eql(['CoffeeMachine', 'Toaster']);
+
+    smartHouseMediator.removeComponent('Toaster');
+
+    smartHouseMediator.componentsList().should.have.length(1);
+    smartHouseMediator.componentsList().should.be.eql(['CoffeeMachine']);
+
+    smartHouseMediator.removeComponent('CoffeeMachine');
+
+    smartHouseMediator.componentsList().should.have.length(0);
   });
 });

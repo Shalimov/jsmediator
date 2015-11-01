@@ -1,27 +1,48 @@
 (function (global) {
   'use strict';
 
+  /**
+   *
+   * @type {{each: Function, map: Function, extend: Function}}
+   * @private
+   */
   var _ = {
-    each: function (collection, handler, ctx) {
+    /**
+     * Function helps to iterate over collection and execute some login that is provided by iterator function on each step if iteration
+     * @param collection Object that will be iterated by provided handler
+     * @param {Function} iterator Function that will be invoked for each step of iteration
+     * @param {Object} |ctx| Context for iterator
+     * */
+    each: function (collection, iterator, ctx) {
       if (Array.isArray(collection)) {
-        collection.forEach(handler.bind(ctx));
+        collection.forEach(iterator.bind(ctx));
       } else if (typeof collection === 'object') {
         Object.keys(collection).forEach(function (key) {
-          handler.call(ctx, collection[key], key, collection);
+          iterator.call(ctx, collection[key], key, collection);
         });
       }
     },
-
-    map: function (collection, handler) {
+    /**
+     * Function helps to iterate over collection and transform values
+     * @param collection Object that will be iterated by provided handler
+     * @param {Function} iterator Function that will be invoked for each step of iteration
+     * @param {Object} |ctx| Context for iterator
+     * @returns {Array} Array of transformed values
+     */
+    map: function (collection, iterator, ctx) {
       var result = [];
 
       this.each(collection, function (value, key, collection) {
-        result.push(handler(value, key, collection));
-      });
+        result.push(handler.call(this, value, key, collection));
+      }, ctx);
 
       return result;
     },
-
+    /**
+     * Functions helps to extend an object by the other object properties (Only direct properties (without prototype props))
+     * @param {Object} dest Destenation object that will be extended
+     * @param {Object} source Source object provides properties for extension
+     */
     extend: function extend(dest, source) {
       this.each(source, function (val, key) {
         dest[key] = val;
@@ -29,11 +50,25 @@
     }
   };
 
+  /**
+   *
+   * @constructor
+   */
   function EventEmitter() {
+    /**
+     *
+     * @type {Object}
+     * @private
+     */
     this._events = {};
   }
 
   _.extend(EventEmitter.prototype, {
+    /**
+     *
+     * @param eventName
+     * @param handler
+     */
     on: function (eventName, handler) {
       if (this._events.hasOwnProperty(eventName)) {
         this._events[eventName].push(handler);
@@ -41,7 +76,11 @@
         this._events[eventName] = [handler];
       }
     },
-
+    /**
+     *
+     * @param eventName
+     * @param handler
+     */
     once: function (eventName, handler) {
       var self = this;
 
@@ -55,7 +94,11 @@
         }
       }
     },
-
+    /**
+     *
+     * @param eventName
+     * @param handler
+     */
     off: function (eventName, handler) {
       if (handler) {
         var handlerIndex = this._events[eventName].indexOf(handler);
@@ -64,7 +107,10 @@
         delete this._events[eventName];
       }
     },
-
+    /**
+     *
+     * @param eventName
+     */
     emit: function (eventName) {
       if (this._events.hasOwnProperty(eventName)) {
         var args = Array.prototype.slice.call(arguments, 1);
@@ -76,14 +122,33 @@
     }
   });
 
-
+  /**
+   *
+   * @param eventEmitter
+   * @constructor
+   */
   function Mediator(eventEmitter) {
     this._eventEmitter = eventEmitter;
+    /**
+     * Dictionary to store all registered components
+     * @type {Object}
+     * @private
+     */
     this._components = {};
+    /**
+     * Dictionary to store all event handler dependencies for registered components
+     * @type {Object}
+     * @private
+     */
     this._deps = {};
   }
 
   _.extend(Mediator.prototype, {
+    /**
+     *
+     * @param {string} name
+     * @param {Function} registrator
+     */
     addComponent: function (name, registrator) {
       if (this._components.hasOwnProperty(name)) {
         throw new Error('Component [' + name + '] already exist')
@@ -118,7 +183,11 @@
 
       this._components[name] = meta;
     },
-
+    /**
+     * Method removes existing component, unattached event handlers for component and remove dependencies
+     * @param {string} name Component Name
+     * @returns {boolean} True if component was removed in opposite false
+     */
     removeComponent: function (name) {
       if (this._deps.hasOwnProperty(name)) {
         _.each(this._deps[name], function (dep) {
@@ -130,19 +199,33 @@
 
       return delete this._components[name];
     },
-
+    /**
+     *
+     * @param name
+     * @returns {boolean}
+     */
     hasComponent: function (name) {
       return !!this._components[name];
     },
-
+    /**
+     *
+     * @param name
+     * @returns {Object}
+     */
     getComponent: function (name) {
       return this._components[name];
     },
-
+    /**
+     * Function provides components' names list for all registered components
+     * @returns {Array} Array that contains string names of each registered component
+     */
     componentsList: function () {
       return Object.keys(this._components);
     },
-
+    /**
+     *
+     * @param {Mediator} mediator
+     */
     shareResponsibility: function (mediator) {
       if (mediator instanceof Mediator) {
         this._eventEmitter = mediator._eventEmitter;
