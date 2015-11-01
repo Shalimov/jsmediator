@@ -119,6 +119,10 @@
           handler.apply(null, args);
         });
       }
+    },
+
+    toString: function () {
+      return '[object EventEmitter]';
     }
   });
 
@@ -230,6 +234,10 @@
       if (mediator instanceof Mediator) {
         this._eventEmitter = mediator._eventEmitter;
       }
+    },
+
+    toString: function () {
+      return '[object Mediator]';
     }
   });
 
