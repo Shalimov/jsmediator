@@ -184,4 +184,8 @@ describe('Mediator spec', function () {
 
     smartHouseMediator.componentsList().should.have.length(0);
   });
+
+  it('should override #toString and #toString should return [object Mediator]', function () {
+    smartHouseMediator.toString().should.be.eql('[object Mediator]');
+  });
 });

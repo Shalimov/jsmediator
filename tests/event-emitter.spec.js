@@ -52,4 +52,8 @@ describe('EventEmitter spec', function () {
     eventEmitter.emit('some:event');
     spyHandler.calledOnce.should.be.True;
   });
+
+  it('should override #toString and #toString should return [object EventEmitter]', function () {
+    eventEmitter.toString().should.be.eql('[object EventEmitter]');
+  });
 });
