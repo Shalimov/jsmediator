@@ -1,4 +1,5 @@
 var mediator = require('../mediator');
+var should = require('should');
 var sinon = require('sinon');
 
 describe('Mediator spec', function () {
@@ -60,6 +61,12 @@ describe('Mediator spec', function () {
     smartHouseMediator = new mediator.Mediator(new mediator.EventEmitter());
   });
 
+  afterEach(function () {
+    smartHouseMediator.removeComponent('CoffeeMachine');
+    smartHouseMediator.removeComponent('Alarm');
+    smartHouseMediator.removeComponent('Toaster');
+  });
+
   it('should #addComponent and register events and remove onEvents meta from descriptor object', function () {
     smartHouseMediator.componentsList().should.have.length(0);
 
@@ -85,6 +92,57 @@ describe('Mediator spec', function () {
     coffeeMachine.makeCoffee.should.not.be.true();
 
     alarm.doAlarm();
+
+    toaster.makeToast.calledOnce.should.be.true();
+    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+  });
+
+  it('should #removeComponent and unsubscribe from events', function () {
+    smartHouseMediator.addComponent('Alarm', alarmRegisterFn);
+    smartHouseMediator.addComponent('CoffeeMachine', coffeeMachineRegisterFn);
+    smartHouseMediator.addComponent('Toaster', toasterMachineRegisterFn);
+
+    var alarm = smartHouseMediator.getComponent('Alarm').alarmClock;
+    var toaster = smartHouseMediator.getComponent('Toaster').toaster;
+    var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
+
+    toaster.makeToast.called.should.not.be.true();
+    coffeeMachine.makeCoffee.should.not.be.true();
+
+    alarm.doAlarm();
+
+    toaster.makeToast.calledOnce.should.be.true();
+    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+
+    smartHouseMediator.removeComponent('CoffeeMachine').should.be.true();
+
+    alarm.doAlarm();
+
+    toaster.makeToast.calledTwice.should.be.true();
+    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+  });
+
+
+  it('should #removeComponent and stop to emit events inside the system', function () {
+    smartHouseMediator.addComponent('Alarm', alarmRegisterFn);
+    smartHouseMediator.addComponent('CoffeeMachine', coffeeMachineRegisterFn);
+    smartHouseMediator.addComponent('Toaster', toasterMachineRegisterFn);
+
+    var alarm = smartHouseMediator.getComponent('Alarm').alarmClock;
+    var toaster = smartHouseMediator.getComponent('Toaster').toaster;
+    var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
+
+    toaster.makeToast.called.should.not.be.true();
+    coffeeMachine.makeCoffee.should.not.be.true();
+
+    alarm.doAlarm();
+
+    toaster.makeToast.calledOnce.should.be.true();
+    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+
+    smartHouseMediator.removeComponent('Alarm').should.be.true();
+
+    should.throws(alarm.doAlarm.bind(alarm));
 
     toaster.makeToast.calledOnce.should.be.true();
     coffeeMachine.makeCoffee.calledOnce.should.be.true();

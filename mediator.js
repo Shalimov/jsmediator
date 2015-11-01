@@ -12,6 +12,16 @@
       }
     },
 
+    map: function (collection, handler) {
+      var result = [];
+
+      this.each(collection, function (value, key, collection) {
+        result.push(handler(value, key, collection));
+      });
+
+      return result;
+    },
+
     extend: function extend(dest, source) {
       this.each(source, function (val, key) {
         dest[key] = val;
@@ -70,7 +80,7 @@
   function Mediator(eventEmitter) {
     this._eventEmitter = eventEmitter;
     this._components = {};
-    this._deps = [];
+    this._deps = {};
   }
 
   _.extend(Mediator.prototype, {
@@ -79,18 +89,27 @@
         throw new Error('Component [' + name + '] already exist')
       }
 
-      var meta = registrator(this._eventEmitter.emit.bind(this._eventEmitter));
+      var meta = registrator(function emit() {
+        if (this.hasComponent(name)) {
+          this._eventEmitter.emit.apply(this._eventEmitter, arguments);
+        } else {
+          throw new Error('Try to emit event by unregistered component: [' + name + ']');
+        }
+      }.bind(this));
 
       if (typeof meta !== 'object') {
         throw new Error('Component: [' + name + '] -> mediator#registrator function should return an object');
       }
 
       if (meta.hasOwnProperty('onEvents')) {
+
+        this._deps[name] = [];
+
         _.each(meta.onEvents, function (handler, eventName) {
           this._eventEmitter.on(eventName, handler);
-          this._deps.push({
-            component: name,
-            event: eventName
+          this._deps[name].push({
+            event: eventName,
+            handler: handler
           });
         }, this);
 
@@ -101,6 +120,14 @@
     },
 
     removeComponent: function (name) {
+      if (this._deps.hasOwnProperty(name)) {
+        _.each(this._deps[name], function (dep) {
+          this.off(dep.event, dep.handler);
+        }, this._eventEmitter);
+
+        delete this._deps[name];
+      }
+
       return delete this._components[name];
     },
 
@@ -114,10 +141,6 @@
 
     componentsList: function () {
       return Object.keys(this._components);
-    },
-
-    getMetaRegistredDeps: function () {
-      return this._deps;
     },
 
     shareResponsibility: function (mediator) {
