@@ -147,6 +147,13 @@
     this._deps = {};
   }
 
+  _.extend(Mediator, {
+    EVENTS: {
+      ADD: 'mediator:add:component',
+      REMOVE: 'mediator:remove:component'
+    }
+  });
+
   _.extend(Mediator.prototype, {
     /**
      *
@@ -186,6 +193,7 @@
       }
 
       this._components[name] = meta;
+      this._eventEmitter.emit(Mediator.EVENTS.ADD, name, meta);
     },
     /**
      * Method removes existing component, unattached event handlers for component and remove dependencies
@@ -201,7 +209,13 @@
         delete this._deps[name];
       }
 
-      return delete this._components[name];
+      var componentDeleted = delete this._components[name];
+
+      if(componentDeleted) {
+        this._eventEmitter.emit(Mediator.EVENTS.REMOVE, name);
+      }
+
+      return componentDeleted;
     },
     /**
      *
