@@ -89,7 +89,7 @@ describe('Mediator spec', function () {
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
     toaster.makeToast.called.should.be.True;
-    coffeeMachine.makeCoffee.should.be.True;
+    coffeeMachine.makeCoffee.called.should.be.True;
 
     alarm.doAlarm();
 
@@ -107,14 +107,14 @@ describe('Mediator spec', function () {
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
     toaster.makeToast.called.should.be.False;
-    coffeeMachine.makeCoffee.should.be.False;
+    coffeeMachine.makeCoffee.called.should.be.False;
 
     alarm.doAlarm();
 
     toaster.makeToast.calledOnce.should.be.True;
     coffeeMachine.makeCoffee.calledOnce.should.be.True;
 
-    smartHouseMediator.removeComponent('CoffeeMachine').should.be.true();
+    smartHouseMediator.removeComponent('CoffeeMachine').should.be.True;
 
     alarm.doAlarm();
 
@@ -133,19 +133,19 @@ describe('Mediator spec', function () {
     var coffeeMachine = smartHouseMediator.getComponent('CoffeeMachine').coffeeMachine;
 
     toaster.makeToast.called.should.be.False;
-    coffeeMachine.makeCoffee.should.be.False;
+    coffeeMachine.makeCoffee.called.should.be.False;
 
     alarm.doAlarm();
 
     toaster.makeToast.calledOnce.should.be.True;
     coffeeMachine.makeCoffee.calledOnce.should.be.True;
 
-    smartHouseMediator.removeComponent('Alarm').should.be.true();
+    smartHouseMediator.removeComponent('Alarm').should.be.True;
 
     should.throws(alarm.doAlarm.bind(alarm));
 
-    toaster.makeToast.calledOnce.should.be.true();
-    coffeeMachine.makeCoffee.calledOnce.should.be.true();
+    toaster.makeToast.calledOnce.should.be.True;
+    coffeeMachine.makeCoffee.calledOnce.should.be.True;
   });
 
   it('should #getComponent by name or return undefinded if component does not exist', function () {
