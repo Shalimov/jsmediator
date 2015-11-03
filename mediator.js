@@ -2,14 +2,14 @@
   'use strict';
 
   /**
-   *
-   * @type {{each: Function, map: Function, extend: Function}}
+   * Internal utilities which help to iterate over object, extend or transform collections
+   * @namespace
    * @private
    */
   var _ = {
     /**
      * Function helps to iterate over collection and execute some login that is provided by iterator function on each step if iteration
-     * @param collection Object that will be iterated by provided handler
+     * @param {Array|Object} collection Object that will be iterated by provided handler
      * @param {Function} iterator Function that will be invoked for each step of iteration
      * @param {Object} |ctx| Context for iterator
      * */
@@ -24,7 +24,7 @@
     },
     /**
      * Function helps to iterate over collection and transform values
-     * @param collection Object that will be iterated by provided handler
+     * @param {Array|Object} collection Object that will be iterated by provided handler
      * @param {Function} iterator Function that will be invoked for each step of iteration
      * @param {Object} |ctx| Context for iterator
      * @returns {Array} Array of transformed values
@@ -51,23 +51,24 @@
   };
 
   /**
-   *
+   * EventEmitter - provides event-driven system
    * @constructor
    */
   function EventEmitter() {
     /**
-     *
+     * Dictionary for events
      * @type {Object}
      * @private
      */
     this._events = {};
   }
 
-  _.extend(EventEmitter.prototype, {
+  _.extend(EventEmitter.prototype, /** @lends EventEmitter.prototype */{
     /**
-     *
-     * @param eventName
-     * @param handler
+     * Method provide ability to subscribe on some event by name and react on it by handler
+     * @method
+     * @param {string} eventName
+     * @param {function} handler
      */
     on: function (eventName, handler) {
       if (this._events.hasOwnProperty(eventName)) {
@@ -77,9 +78,10 @@
       }
     },
     /**
-     *
-     * @param eventName
-     * @param handler
+     * Method allows to subscribe on some event and unsubscribe automatically after event will happen
+     * @method
+     * @param {string} eventName
+     * @param {function} handler
      */
     once: function (eventName, handler) {
       var self = this;
@@ -95,9 +97,10 @@
       }
     },
     /**
-     *
-     * @param eventName
-     * @param handler
+     * Method allows to remove subscription for specify handler of all event if handler is not defined
+     * @method
+     * @param {string} eventName
+     * @param {function} |handler|
      */
     off: function (eventName, handler) {
       if (handler) {
@@ -108,7 +111,8 @@
       }
     },
     /**
-     *
+     * Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
+     * @method
      * @param eventName
      */
     emit: function (eventName) {
@@ -120,18 +124,22 @@
         });
       }
     },
-
+    /**
+     * Overriding of standart toString method
+     * @returns {string} Returns string '[object EventEmitter]'
+     */
     toString: function () {
       return '[object EventEmitter]';
     }
   });
 
   /**
-   *
+   * Mediator - Provide ability to you create a simple mediator to control interaction among components based on low coupling
    * @param eventEmitter
+   * @param setting
    * @constructor
    */
-  function Mediator(eventEmitter) {
+  function Mediator(eventEmitter, settings) {
     this._eventEmitter = eventEmitter;
     /**
      * Dictionary to store all registered components
@@ -145,18 +153,25 @@
      * @private
      */
     this._deps = {};
+
+    /**
+     * @type {Object}
+     * @private
+     */
+    this._settings = settings;
   }
 
-  _.extend(Mediator, {
+  _.extend(Mediator, /** @lends Mediator */ {
     EVENTS: {
       ADD: 'mediator:add:component',
       REMOVE: 'mediator:remove:component'
     }
   });
 
-  _.extend(Mediator.prototype, {
+  _.extend(Mediator.prototype, /** @lends Mediator.prototype */ {
     /**
-     *
+     * Method gives ability to add component
+     * @method
      * @param {string} name
      * @param {Function} registrator
      */
@@ -197,6 +212,7 @@
     },
     /**
      * Method removes existing component, unattached event handlers for component and remove dependencies
+     * @method
      * @param {string} name Component Name
      * @returns {boolean} True if component was removed in opposite false
      */
@@ -211,14 +227,15 @@
 
       var componentDeleted = delete this._components[name];
 
-      if(componentDeleted) {
+      if (componentDeleted) {
         this._eventEmitter.emit(Mediator.EVENTS.REMOVE, name);
       }
 
       return componentDeleted;
     },
     /**
-     *
+     * Method provides you ability to check component existence by name
+     * @method
      * @param name
      * @returns {boolean}
      */
@@ -234,7 +251,7 @@
       return this._components[name];
     },
     /**
-     * Function provides components' names list for all registered components
+     * Method provides components' names list for all registered components
      * @returns {Array} Array that contains string names of each registered component
      */
     componentsList: function () {
@@ -250,6 +267,10 @@
       }
     },
 
+    /**
+     * Return string for Instance of Mediator [object Mediator]
+     * @returns {string}
+     */
     toString: function () {
       return '[object Mediator]';
     }
@@ -261,18 +282,15 @@
   if (typeof exports !== 'undefined') {
     exports.EventEmitter = EventEmitter;
     exports.Mediator = Mediator;
-    exports._ = _;
 
     if (typeof module !== 'undefined' && module.exports) {
       exports = module.exports = {
         Mediator: Mediator,
-        EventEmitter: EventEmitter,
-        _: _
+        EventEmitter: EventEmitter
       };
     }
   } else {
     global.EventEmitter = EventEmitter;
     global.Mediator = Mediator;
-    global._ = _;
   }
 })(this);
