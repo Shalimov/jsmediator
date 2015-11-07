@@ -103,7 +103,7 @@
        * Method allows to remove subscription for specify handler of all event if handler is not defined
        * @method
        * @param {string} eventName
-       * @param {function} |handler|
+       * @param {function} [handler]
        */
       off: function (eventName, handler) {
         if (handler) {
@@ -116,7 +116,8 @@
       /**
        * Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
        * @method
-       * @param eventName
+       * @param {string} eventName
+       * @param {arguments} List of arguments
        */
       emit: function (eventName) {
         if (this._events.hasOwnProperty(eventName)) {
@@ -247,7 +248,7 @@
       /**
        * Method provides you ability to check component existence by name
        * @method
-       * @param name
+       * @param {string} name
        * @returns {boolean}
        */
       hasComponent: function (name) {
@@ -256,7 +257,7 @@
       /**
        * Method provides component by name
        * @method
-       * @param name
+       * @param {string} name
        * @returns {Object}
        */
       getComponent: function (name) {
