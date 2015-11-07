@@ -7,8 +7,8 @@
     * [new EventEmitter()](#new_MediatorDefinition.EventEmitter_new)
     * [.on(eventName, handler)](#MediatorDefinition.EventEmitter+on)
     * [.once(eventName, handler)](#MediatorDefinition.EventEmitter+once)
-    * [.off(eventName, |handler|)](#MediatorDefinition.EventEmitter+off)
-    * [.emit(eventName)](#MediatorDefinition.EventEmitter+emit)
+    * [.off(eventName, [handler])](#MediatorDefinition.EventEmitter+off)
+    * [.emit(eventName, List)](#MediatorDefinition.EventEmitter+emit)
     * [.toString()](#MediatorDefinition.EventEmitter+toString) ⇒ <code>string</code>
   * [.Mediator](#MediatorDefinition.Mediator)
     * [new Mediator(eventEmitter, setting)](#new_MediatorDefinition.Mediator_new)
@@ -33,8 +33,8 @@
   * [new EventEmitter()](#new_MediatorDefinition.EventEmitter_new)
   * [.on(eventName, handler)](#MediatorDefinition.EventEmitter+on)
   * [.once(eventName, handler)](#MediatorDefinition.EventEmitter+once)
-  * [.off(eventName, |handler|)](#MediatorDefinition.EventEmitter+off)
-  * [.emit(eventName)](#MediatorDefinition.EventEmitter+emit)
+  * [.off(eventName, [handler])](#MediatorDefinition.EventEmitter+off)
+  * [.emit(eventName, List)](#MediatorDefinition.EventEmitter+emit)
   * [.toString()](#MediatorDefinition.EventEmitter+toString) ⇒ <code>string</code>
 
 <a name="new_MediatorDefinition.EventEmitter_new"></a>
@@ -64,7 +64,7 @@ Method allows to subscribe on some event and unsubscribe automatically after eve
 | handler | <code>function</code> | 
 
 <a name="MediatorDefinition.EventEmitter+off"></a>
-#### eventEmitter.off(eventName, |handler|)
+#### eventEmitter.off(eventName, [handler])
 Method allows to remove subscription for specify handler of all event if handler is not defined
 
 **Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
@@ -72,17 +72,18 @@ Method allows to remove subscription for specify handler of all event if handler
 | Param | Type |
 | --- | --- |
 | eventName | <code>string</code> | 
-| |handler| | <code>function</code> | 
+| [handler] | <code>function</code> | 
 
 <a name="MediatorDefinition.EventEmitter+emit"></a>
-#### eventEmitter.emit(eventName)
+#### eventEmitter.emit(eventName, List)
 Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
 
 **Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
 
-| Param |
-| --- |
-| eventName | 
+| Param | Type | Description |
+| --- | --- | --- |
+| eventName | <code>string</code> |  |
+| List | <code>arguments</code> | of arguments |
 
 <a name="MediatorDefinition.EventEmitter+toString"></a>
 #### eventEmitter.toString() ⇒ <code>string</code>
@@ -147,9 +148,9 @@ Method provides you ability to check component existence by name
 
 **Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
 
-| Param |
-| --- |
-| name | 
+| Param | Type |
+| --- | --- |
+| name | <code>string</code> | 
 
 <a name="MediatorDefinition.Mediator+getComponent"></a>
 #### mediator.getComponent(name) ⇒ <code>Object</code>
@@ -157,9 +158,9 @@ Method provides component by name
 
 **Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
 
-| Param |
-| --- |
-| name | 
+| Param | Type |
+| --- | --- |
+| name | <code>string</code> | 
 
 <a name="MediatorDefinition.Mediator+componentsList"></a>
 #### mediator.componentsList() ⇒ <code>Array</code>
