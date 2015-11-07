@@ -10,7 +10,8 @@
     "sinon": "^1.17.2"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "docs": "jsdoc2md mediator.js > README.md"
   },
   "repository": {
     "type": "git",
