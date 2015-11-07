@@ -1,3 +1,6 @@
+# DOC IN PROGRESS
+# Pls, look at the tests for examples
+
 <a name="global"></a>
 ## global : <code>object</code>
 **Kind**: global namespace  
