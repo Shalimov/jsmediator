@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "docs": "jsdoc2md mediator.js > README.md"
+    "upDocs": "jsdoc2md mediator.js > README.md && git add . && git commit -am 'Updated Readme.md' && git push origin master"
   },
   "repository": {
     "type": "git",
