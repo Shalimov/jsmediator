@@ -1,4 +1,4 @@
-/** @namespace MediatorDefinition */
+/** @namespace global */
 (function (global) {
   'use strict';
 
@@ -55,7 +55,7 @@
    * EventEmitter - provides event-driven system
    * @class
    * @constructor
-   * @memberof MediatorDefinition
+   * @memberof global
    */
   function EventEmitter() {
     this._events = {};
@@ -64,7 +64,7 @@
   _.extend(EventEmitter.prototype,
     /**
      * @lends EventEmitter.prototype
-     * @memberof MediatorDefinition
+     * @memberof global
      */
     {
       /**
@@ -144,7 +144,7 @@
    * @constructor
    * @param {EventEmitter} eventEmitter
    * @param {Object} setting
-   * @memberof MediatorDefinition
+   * @memberof global
    */
   function Mediator(eventEmitter, settings) {
     this._eventEmitter = eventEmitter;
@@ -156,7 +156,7 @@
   _.extend(Mediator,
     /**
      * @lends Mediator
-     * @memberof MediatorDefinition
+     * @memberof global
      */ {
       /**
        * @constant
@@ -178,7 +178,7 @@
   _.extend(Mediator.prototype,
     /**
      * @lends Mediator.prototype
-     * @memberof MediatorDefinition
+     * @memberof global
      */
     {
       /**

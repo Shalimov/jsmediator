@@ -1,116 +1,116 @@
-<a name="MediatorDefinition"></a>
-## MediatorDefinition : <code>object</code>
+<a name="global"></a>
+## global : <code>object</code>
 **Kind**: global namespace  
 
-* [MediatorDefinition](#MediatorDefinition) : <code>object</code>
-  * [.EventEmitter](#MediatorDefinition.EventEmitter)
-    * [new EventEmitter()](#new_MediatorDefinition.EventEmitter_new)
-    * [.on(eventName, handler)](#MediatorDefinition.EventEmitter+on)
-    * [.once(eventName, handler)](#MediatorDefinition.EventEmitter+once)
-    * [.off(eventName, [handler])](#MediatorDefinition.EventEmitter+off)
-    * [.emit(eventName, List)](#MediatorDefinition.EventEmitter+emit)
-    * [.toString()](#MediatorDefinition.EventEmitter+toString) ⇒ <code>string</code>
-  * [.Mediator](#MediatorDefinition.Mediator)
-    * [new Mediator(eventEmitter, setting)](#new_MediatorDefinition.Mediator_new)
+* [global](#global) : <code>object</code>
+  * [.EventEmitter](#global.EventEmitter)
+    * [new EventEmitter()](#new_global.EventEmitter_new)
+    * [.on(eventName, handler)](#global.EventEmitter+on)
+    * [.once(eventName, handler)](#global.EventEmitter+once)
+    * [.off(eventName, [handler])](#global.EventEmitter+off)
+    * [.emit(eventName, List)](#global.EventEmitter+emit)
+    * [.toString()](#global.EventEmitter+toString) ⇒ <code>string</code>
+  * [.Mediator](#global.Mediator)
+    * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
     * _instance_
-      * [.addComponent(name, registrator)](#MediatorDefinition.Mediator+addComponent)
-      * [.removeComponent(name)](#MediatorDefinition.Mediator+removeComponent) ⇒ <code>boolean</code>
-      * [.hasComponent(name)](#MediatorDefinition.Mediator+hasComponent) ⇒ <code>boolean</code>
-      * [.getComponent(name)](#MediatorDefinition.Mediator+getComponent) ⇒ <code>Object</code>
-      * [.componentsList()](#MediatorDefinition.Mediator+componentsList) ⇒ <code>Array</code>
-      * [.shareResponsibility(mediator)](#MediatorDefinition.Mediator+shareResponsibility)
-      * [.toString()](#MediatorDefinition.Mediator+toString) ⇒ <code>string</code>
+      * [.addComponent(name, registrator)](#global.Mediator+addComponent)
+      * [.removeComponent(name)](#global.Mediator+removeComponent) ⇒ <code>boolean</code>
+      * [.hasComponent(name)](#global.Mediator+hasComponent) ⇒ <code>boolean</code>
+      * [.getComponent(name)](#global.Mediator+getComponent) ⇒ <code>Object</code>
+      * [.componentsList()](#global.Mediator+componentsList) ⇒ <code>Array</code>
+      * [.shareResponsibility(mediator)](#global.Mediator+shareResponsibility)
+      * [.toString()](#global.Mediator+toString) ⇒ <code>string</code>
     * _static_
-      * [.EVENTS](#MediatorDefinition.Mediator.EVENTS)
-        * [.ADD](#MediatorDefinition.Mediator.EVENTS.ADD)
-        * [.REMOVE](#MediatorDefinition.Mediator.EVENTS.REMOVE)
+      * [.EVENTS](#global.Mediator.EVENTS)
+        * [.ADD](#global.Mediator.EVENTS.ADD)
+        * [.REMOVE](#global.Mediator.EVENTS.REMOVE)
 
-<a name="MediatorDefinition.EventEmitter"></a>
-### MediatorDefinition.EventEmitter
-**Kind**: static class of <code>[MediatorDefinition](#MediatorDefinition)</code>  
+<a name="global.EventEmitter"></a>
+### global.EventEmitter
+**Kind**: static class of <code>[global](#global)</code>  
 
-* [.EventEmitter](#MediatorDefinition.EventEmitter)
-  * [new EventEmitter()](#new_MediatorDefinition.EventEmitter_new)
-  * [.on(eventName, handler)](#MediatorDefinition.EventEmitter+on)
-  * [.once(eventName, handler)](#MediatorDefinition.EventEmitter+once)
-  * [.off(eventName, [handler])](#MediatorDefinition.EventEmitter+off)
-  * [.emit(eventName, List)](#MediatorDefinition.EventEmitter+emit)
-  * [.toString()](#MediatorDefinition.EventEmitter+toString) ⇒ <code>string</code>
+* [.EventEmitter](#global.EventEmitter)
+  * [new EventEmitter()](#new_global.EventEmitter_new)
+  * [.on(eventName, handler)](#global.EventEmitter+on)
+  * [.once(eventName, handler)](#global.EventEmitter+once)
+  * [.off(eventName, [handler])](#global.EventEmitter+off)
+  * [.emit(eventName, List)](#global.EventEmitter+emit)
+  * [.toString()](#global.EventEmitter+toString) ⇒ <code>string</code>
 
-<a name="new_MediatorDefinition.EventEmitter_new"></a>
+<a name="new_global.EventEmitter_new"></a>
 #### new EventEmitter()
 EventEmitter - provides event-driven system
 
-<a name="MediatorDefinition.EventEmitter+on"></a>
+<a name="global.EventEmitter+on"></a>
 #### eventEmitter.on(eventName, handler)
 Method provide ability to subscribe on some event by name and react on it by handler
 
-**Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
+**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
 
 | Param | Type |
 | --- | --- |
 | eventName | <code>string</code> | 
 | handler | <code>function</code> | 
 
-<a name="MediatorDefinition.EventEmitter+once"></a>
+<a name="global.EventEmitter+once"></a>
 #### eventEmitter.once(eventName, handler)
 Method allows to subscribe on some event and unsubscribe automatically after event will happen
 
-**Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
+**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
 
 | Param | Type |
 | --- | --- |
 | eventName | <code>string</code> | 
 | handler | <code>function</code> | 
 
-<a name="MediatorDefinition.EventEmitter+off"></a>
+<a name="global.EventEmitter+off"></a>
 #### eventEmitter.off(eventName, [handler])
 Method allows to remove subscription for specify handler of all event if handler is not defined
 
-**Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
+**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
 
 | Param | Type |
 | --- | --- |
 | eventName | <code>string</code> | 
 | [handler] | <code>function</code> | 
 
-<a name="MediatorDefinition.EventEmitter+emit"></a>
+<a name="global.EventEmitter+emit"></a>
 #### eventEmitter.emit(eventName, List)
 Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
 
-**Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
+**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | eventName | <code>string</code> |  |
 | List | <code>arguments</code> | of arguments |
 
-<a name="MediatorDefinition.EventEmitter+toString"></a>
+<a name="global.EventEmitter+toString"></a>
 #### eventEmitter.toString() ⇒ <code>string</code>
 Overriding of standart toString method
 
-**Kind**: instance method of <code>[EventEmitter](#MediatorDefinition.EventEmitter)</code>  
+**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
 **Returns**: <code>string</code> - Returns string '[object EventEmitter]'  
-<a name="MediatorDefinition.Mediator"></a>
-### MediatorDefinition.Mediator
-**Kind**: static class of <code>[MediatorDefinition](#MediatorDefinition)</code>  
+<a name="global.Mediator"></a>
+### global.Mediator
+**Kind**: static class of <code>[global](#global)</code>  
 
-* [.Mediator](#MediatorDefinition.Mediator)
-  * [new Mediator(eventEmitter, setting)](#new_MediatorDefinition.Mediator_new)
+* [.Mediator](#global.Mediator)
+  * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
   * _instance_
-    * [.addComponent(name, registrator)](#MediatorDefinition.Mediator+addComponent)
-    * [.removeComponent(name)](#MediatorDefinition.Mediator+removeComponent) ⇒ <code>boolean</code>
-    * [.hasComponent(name)](#MediatorDefinition.Mediator+hasComponent) ⇒ <code>boolean</code>
-    * [.getComponent(name)](#MediatorDefinition.Mediator+getComponent) ⇒ <code>Object</code>
-    * [.componentsList()](#MediatorDefinition.Mediator+componentsList) ⇒ <code>Array</code>
-    * [.shareResponsibility(mediator)](#MediatorDefinition.Mediator+shareResponsibility)
-    * [.toString()](#MediatorDefinition.Mediator+toString) ⇒ <code>string</code>
+    * [.addComponent(name, registrator)](#global.Mediator+addComponent)
+    * [.removeComponent(name)](#global.Mediator+removeComponent) ⇒ <code>boolean</code>
+    * [.hasComponent(name)](#global.Mediator+hasComponent) ⇒ <code>boolean</code>
+    * [.getComponent(name)](#global.Mediator+getComponent) ⇒ <code>Object</code>
+    * [.componentsList()](#global.Mediator+componentsList) ⇒ <code>Array</code>
+    * [.shareResponsibility(mediator)](#global.Mediator+shareResponsibility)
+    * [.toString()](#global.Mediator+toString) ⇒ <code>string</code>
   * _static_
-    * [.EVENTS](#MediatorDefinition.Mediator.EVENTS)
-      * [.ADD](#MediatorDefinition.Mediator.EVENTS.ADD)
-      * [.REMOVE](#MediatorDefinition.Mediator.EVENTS.REMOVE)
+    * [.EVENTS](#global.Mediator.EVENTS)
+      * [.ADD](#global.Mediator.EVENTS.ADD)
+      * [.REMOVE](#global.Mediator.EVENTS.REMOVE)
 
-<a name="new_MediatorDefinition.Mediator_new"></a>
+<a name="new_global.Mediator_new"></a>
 #### new Mediator(eventEmitter, setting)
 Mediator - Provide ability to you create a simple mediator to control interaction among components based on low coupling
 
@@ -120,84 +120,84 @@ Mediator - Provide ability to you create a simple mediator to control interactio
 | eventEmitter | <code>EventEmitter</code> | 
 | setting | <code>Object</code> | 
 
-<a name="MediatorDefinition.Mediator+addComponent"></a>
+<a name="global.Mediator+addComponent"></a>
 #### mediator.addComponent(name, registrator)
 Method provides ability to add component
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 
 | Param | Type |
 | --- | --- |
 | name | <code>string</code> | 
 | registrator | <code>function</code> | 
 
-<a name="MediatorDefinition.Mediator+removeComponent"></a>
+<a name="global.Mediator+removeComponent"></a>
 #### mediator.removeComponent(name) ⇒ <code>boolean</code>
 Method removes existing component, unattached event handlers for component and remove dependencies
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 **Returns**: <code>boolean</code> - True if component was removed in opposite false  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | name | <code>string</code> | Component Name |
 
-<a name="MediatorDefinition.Mediator+hasComponent"></a>
+<a name="global.Mediator+hasComponent"></a>
 #### mediator.hasComponent(name) ⇒ <code>boolean</code>
 Method provides you ability to check component existence by name
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 
 | Param | Type |
 | --- | --- |
 | name | <code>string</code> | 
 
-<a name="MediatorDefinition.Mediator+getComponent"></a>
+<a name="global.Mediator+getComponent"></a>
 #### mediator.getComponent(name) ⇒ <code>Object</code>
 Method provides component by name
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 
 | Param | Type |
 | --- | --- |
 | name | <code>string</code> | 
 
-<a name="MediatorDefinition.Mediator+componentsList"></a>
+<a name="global.Mediator+componentsList"></a>
 #### mediator.componentsList() ⇒ <code>Array</code>
 Method provides components' names list for all registered components
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 **Returns**: <code>Array</code> - Array that contains string names of each registered component  
-<a name="MediatorDefinition.Mediator+shareResponsibility"></a>
+<a name="global.Mediator+shareResponsibility"></a>
 #### mediator.shareResponsibility(mediator)
 Method can be used if you want to share events among several mediators in application
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
 
 | Param | Type |
 | --- | --- |
 | mediator | <code>Mediator</code> | 
 
-<a name="MediatorDefinition.Mediator+toString"></a>
+<a name="global.Mediator+toString"></a>
 #### mediator.toString() ⇒ <code>string</code>
 Return string for Instance of Mediator [object Mediator]
 
-**Kind**: instance method of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
-<a name="MediatorDefinition.Mediator.EVENTS"></a>
+**Kind**: instance method of <code>[Mediator](#global.Mediator)</code>  
+<a name="global.Mediator.EVENTS"></a>
 #### Mediator.EVENTS
-**Kind**: static constant of <code>[Mediator](#MediatorDefinition.Mediator)</code>  
+**Kind**: static constant of <code>[Mediator](#global.Mediator)</code>  
 
-  * [.EVENTS](#MediatorDefinition.Mediator.EVENTS)
-    * [.ADD](#MediatorDefinition.Mediator.EVENTS.ADD)
-    * [.REMOVE](#MediatorDefinition.Mediator.EVENTS.REMOVE)
+  * [.EVENTS](#global.Mediator.EVENTS)
+    * [.ADD](#global.Mediator.EVENTS.ADD)
+    * [.REMOVE](#global.Mediator.EVENTS.REMOVE)
 
-<a name="MediatorDefinition.Mediator.EVENTS.ADD"></a>
+<a name="global.Mediator.EVENTS.ADD"></a>
 ##### EVENTS.ADD
 Event with this name is emitted every time when new component is registered in system
 
-**Kind**: static constant of <code>[EVENTS](#MediatorDefinition.Mediator.EVENTS)</code>  
-<a name="MediatorDefinition.Mediator.EVENTS.REMOVE"></a>
+**Kind**: static constant of <code>[EVENTS](#global.Mediator.EVENTS)</code>  
+<a name="global.Mediator.EVENTS.REMOVE"></a>
 ##### EVENTS.REMOVE
 Event with this name is emitted every time when component is removed in system
 
-**Kind**: static constant of <code>[EVENTS](#MediatorDefinition.Mediator.EVENTS)</code>  
+**Kind**: static constant of <code>[EVENTS](#global.Mediator.EVENTS)</code>  
