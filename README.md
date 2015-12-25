@@ -6,13 +6,6 @@
 **Kind**: global namespace  
 
 * [global](#global) : <code>object</code>
-  * [.EventEmitter](#global.EventEmitter)
-    * [new EventEmitter()](#new_global.EventEmitter_new)
-    * [.on(eventName, handler)](#global.EventEmitter+on)
-    * [.once(eventName, handler)](#global.EventEmitter+once)
-    * [.off(eventName, [handler])](#global.EventEmitter+off)
-    * [.emit(eventName, List)](#global.EventEmitter+emit)
-    * [.toString()](#global.EventEmitter+toString) ⇒ <code>string</code>
   * [.Mediator](#global.Mediator)
     * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
     * _instance_
@@ -27,76 +20,6 @@
       * [.EVENTS](#global.Mediator.EVENTS)
         * [.ADD](#global.Mediator.EVENTS.ADD)
         * [.REMOVE](#global.Mediator.EVENTS.REMOVE)
-
-<a name="global.EventEmitter"></a>
-### global.EventEmitter
-**Kind**: static class of <code>[global](#global)</code>  
-
-* [.EventEmitter](#global.EventEmitter)
-  * [new EventEmitter()](#new_global.EventEmitter_new)
-  * [.on(eventName, handler)](#global.EventEmitter+on)
-  * [.once(eventName, handler)](#global.EventEmitter+once)
-  * [.off(eventName, [handler])](#global.EventEmitter+off)
-  * [.emit(eventName, List)](#global.EventEmitter+emit)
-  * [.toString()](#global.EventEmitter+toString) ⇒ <code>string</code>
-
-<a name="new_global.EventEmitter_new"></a>
-#### new EventEmitter()
-EventEmitter - provides event-driven system
-
-<a name="global.EventEmitter+on"></a>
-#### eventEmitter.on(eventName, handler)
-Method provide ability to subscribe on some event by name and react on it by handler
-
-**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
-
-| Param | Type |
-| --- | --- |
-| eventName | <code>string</code> | 
-| handler | <code>function</code> | 
-
-<a name="global.EventEmitter+once"></a>
-#### eventEmitter.once(eventName, handler)
-Method allows to subscribe on some event and unsubscribe automatically after event will happen
-
-**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
-
-| Param | Type |
-| --- | --- |
-| eventName | <code>string</code> | 
-| handler | <code>function</code> | 
-
-<a name="global.EventEmitter+off"></a>
-#### eventEmitter.off(eventName, [handler])
-Method allows to remove subscription for specify handler of all event if handler is not defined
-
-**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
-
-| Param | Type |
-| --- | --- |
-| eventName | <code>string</code> | 
-| [handler] | <code>function</code> | 
-
-<a name="global.EventEmitter+emit"></a>
-#### eventEmitter.emit(eventName, List)
-Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
-
-**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| eventName | <code>string</code> |  |
-| List | <code>arguments</code> | of arguments |
-
-<a name="global.EventEmitter+toString"></a>
-#### eventEmitter.toString() ⇒ <code>string</code>
-Overriding of standart toString method
-
-**Kind**: instance method of <code>[EventEmitter](#global.EventEmitter)</code>  
-**Returns**: <code>string</code> - Returns string '[object EventEmitter]'  
-<a name="global.Mediator"></a>
-### global.Mediator
-**Kind**: static class of <code>[global](#global)</code>  
 
 * [.Mediator](#global.Mediator)
   * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
