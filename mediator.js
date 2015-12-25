@@ -15,29 +15,24 @@
      * @param {Object} |ctx| Context for iterator
      * */
     each: function (collection, iterator, ctx) {
+      var i, length;
+
       if (Array.isArray(collection)) {
-        collection.forEach(iterator.bind(ctx));
+        for (i = 0, length = collection.length; i < length; i++) {
+          if (iterator.call(ctx, collection[i], i, collection)) {
+            break;
+          }
+        }
       } else if (typeof collection === 'object') {
-        Object.keys(collection).forEach(function (key) {
-          iterator.call(ctx, collection[key], key, collection);
-        });
+        var keys = Object.keys(collection);
+
+        for (i = 0, length = keys.length; i < length; i++) {
+          var key = keys[i];
+          if (iterator.call(ctx, collection[key], key, collection)) {
+            break;
+          }
+        }
       }
-    },
-    /**
-     * Function helps to iterate over collection and transform values
-     * @param {Array|Object} collection Object that will be iterated by provided handler
-     * @param {Function} iterator Function that will be invoked for each step of iteration
-     * @param {Object} |ctx| Context for iterator
-     * @returns {Array} Array of transformed values
-     */
-    map: function (collection, iterator, ctx) {
-      var result = [];
-
-      this.each(collection, function (value, key, collection) {
-        result.push(handler.call(this, value, key, collection));
-      }, ctx);
-
-      return result;
     },
     /**
      * Functions helps to extend an object by the other object properties (Only direct properties (without prototype props))
@@ -52,93 +47,6 @@
   };
 
   /**
-   * EventEmitter - provides event-driven system
-   * @class
-   * @constructor
-   * @memberof global
-   */
-  function EventEmitter() {
-    this._events = {};
-  }
-
-  _.extend(EventEmitter.prototype,
-    /**
-     * @lends EventEmitter.prototype
-     * @memberof global
-     */
-    {
-      /**
-       * Method provide ability to subscribe on some event by name and react on it by handler
-       * @method
-       * @param {string} eventName
-       * @param {function} handler
-       */
-      on: function (eventName, handler) {
-        if (this._events.hasOwnProperty(eventName)) {
-          this._events[eventName].push(handler);
-        } else {
-          this._events[eventName] = [handler];
-        }
-      },
-      /**
-       * Method allows to subscribe on some event and unsubscribe automatically after event will happen
-       * @method
-       * @param {string} eventName
-       * @param {function} handler
-       */
-      once: function (eventName, handler) {
-        var self = this;
-
-        self.on(eventName, decorator);
-
-        function decorator() {
-          try {
-            handler.apply(this, arguments);
-          } finally {
-            self.off(eventName, decorator);
-          }
-        }
-      },
-      /**
-       * Method allows to remove subscription for specify handler of all event if handler is not defined
-       * @method
-       * @param {string} eventName
-       * @param {function} [handler]
-       */
-      off: function (eventName, handler) {
-        if (handler) {
-          var handlerIndex = this._events[eventName].indexOf(handler);
-          this._events[eventName].splice(handlerIndex, 1);
-        } else {
-          delete this._events[eventName];
-        }
-      },
-      /**
-       * Method allows to trigger all handler which are subscribed on some event and also pass any number of arguments
-       * @method
-       * @param {string} eventName
-       * @param {arguments} List of arguments
-       */
-      emit: function (eventName) {
-        if (this._events.hasOwnProperty(eventName)) {
-          var args = Array.prototype.slice.call(arguments, 1);
-
-          this._events[eventName].forEach(function (handler) {
-            handler.apply(null, args);
-          });
-        }
-      },
-      /**
-       * Overriding of standart toString method
-       * @method
-       * @returns {string} Returns string '[object EventEmitter]'
-       */
-      toString: function () {
-        return '[object EventEmitter]';
-      }
-    });
-
-  /**
    * Mediator - Provide ability to you create a simple mediator to control interaction among components based on low coupling
    * @class
    * @constructor
@@ -149,31 +57,15 @@
   function Mediator(eventEmitter, settings) {
     this._eventEmitter = eventEmitter;
     this._components = {};
-    this._deps = {};
     this._settings = settings;
   }
 
-  _.extend(Mediator,
-    /**
-     * @lends Mediator
-     * @memberof global
-     */ {
-      /**
-       * @constant
-       */
-      EVENTS: {
-        /**
-         * Event with this name is emitted every time when new component is registered in system
-         * @constant
-         */
-        ADD: 'mediator:add:component',
-        /**
-         * Event with this name is emitted every time when component is removed in system
-         * @constant
-         */
-        REMOVE: 'mediator:remove:component'
-      }
-    });
+  _.extend(Mediator, {
+    EVENTS: {
+      ADD: 'MEDIATOR:EVENT:ADD',
+      REMOVE: 'MEDIATOR:EVENT:REMOVE'
+    }
+  });
 
   _.extend(Mediator.prototype,
     /**
@@ -189,10 +81,10 @@
        */
       addComponent: function (name, registrator) {
         if (this._components.hasOwnProperty(name)) {
-          throw new Error('Component [' + name + '] already exist')
+          throw new Error('Component [' + name + '] already exist');
         }
 
-        var meta = registrator(function emit() {
+        var meta = registrator(function () {
           if (this.hasComponent(name)) {
             this._eventEmitter.emit.apply(this._eventEmitter, arguments);
           } else {
@@ -205,15 +97,8 @@
         }
 
         if (meta.hasOwnProperty('onEvents')) {
-
-          this._deps[name] = [];
-
           _.each(meta.onEvents, function (handler, eventName) {
-            this._eventEmitter.on(eventName, handler);
-            this._deps[name].push({
-              event: eventName,
-              handler: handler
-            });
+            this._eventEmitter.on(eventName + '.' + name, handler);
           }, this);
 
           delete meta.onEvents;
@@ -229,13 +114,7 @@
        * @returns {boolean} True if component was removed in opposite false
        */
       removeComponent: function (name) {
-        if (this._deps.hasOwnProperty(name)) {
-          _.each(this._deps[name], function (dep) {
-            this.off(dep.event, dep.handler);
-          }, this._eventEmitter);
-
-          delete this._deps[name];
-        }
+        this._eventEmitter.off('.' + name);
 
         var componentDeleted = delete this._components[name];
 
@@ -292,18 +171,9 @@
       }
     });
 
-  if (typeof exports !== 'undefined') {
-    exports.EventEmitter = EventEmitter;
-    exports.Mediator = Mediator;
-
-    if (typeof module !== 'undefined' && module.exports) {
-      exports = module.exports = {
-        Mediator: Mediator,
-        EventEmitter: EventEmitter
-      };
-    }
+  if (typeof module !== 'undefined' && module.exports) {
+    exports = module.exports = Mediator;
   } else {
-    global.EventEmitter = EventEmitter;
     global.Mediator = Mediator;
   }
 })(this);

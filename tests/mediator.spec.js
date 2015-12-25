@@ -1,4 +1,5 @@
-var mediator = require('../mediator');
+var EventEmitter = require('../vendor/is-emitter/dist/event-emitter.min');
+var Mediator = require('../mediator');
 var should = require('should');
 var sinon = require('sinon');
 
@@ -58,7 +59,7 @@ describe('Mediator spec', function () {
   var smartHouseMediator;
 
   beforeEach(function () {
-    smartHouseMediator = new mediator.Mediator(new mediator.EventEmitter());
+    smartHouseMediator = new Mediator(new EventEmitter());
   });
 
   afterEach(function () {

@@ -1,0 +1,26 @@
+{
+  "name": "jsmediator",
+  "version": "0.9.0",
+  "homepage": "https://github.com/Shalimov/jsmediator",
+  "authors": [
+    "Shalimov <Shalimich@gmail.com>"
+  ],
+  "description": "Mediator for your Application",
+  "main": "mediator",
+  "keywords": [
+    "Mediator",
+    "EventEmitter",
+    "Events"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "is-emitter": "~1.0.2"
+  }
+}
