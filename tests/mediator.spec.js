@@ -1,5 +1,5 @@
 var EventEmitter = require('../vendor/is-emitter/dist/event-emitter.min');
-var Mediator = require('../mediator');
+var Mediator = require('../dist/mediator');
 var should = require('should');
 var sinon = require('sinon');
 
