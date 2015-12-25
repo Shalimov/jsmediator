@@ -43,6 +43,7 @@
       this.each(source, function (val, key) {
         dest[key] = val;
       });
+      return dest;
     }
   };
 
@@ -55,15 +56,22 @@
    * @memberof global
    */
   function Mediator(eventEmitter, settings) {
+    settings = _.extend({
+      emitHistory: false,
+      emitHistoryLength: 0
+    }, settings);
+
     this._eventEmitter = eventEmitter;
     this._components = {};
     this._settings = settings;
+
+    this._emitHistory = settings.emitHistory ? [] : null;
   }
 
   _.extend(Mediator, {
     EVENTS: {
-      ADD: 'MEDIATOR:EVENT:ADD',
-      REMOVE: 'MEDIATOR:EVENT:REMOVE'
+      ADD: 'mediator:component:add',
+      REMOVE: 'mediator:component:remove'
     }
   });
 
@@ -73,6 +81,18 @@
      * @memberof global
      */
     {
+      _pushEmitHistory: function (component, event) {
+        if (this._settings.emitHistory) {
+          this._emitHistory.push({
+            component: component,
+            event: event
+          });
+
+          if (this._emitHistory.length > this._settings.emitHistoryLength) {
+            this._emitHistory.shift();
+          }
+        }
+      },
       /**
        * Method provides ability to add component
        * @method
@@ -87,6 +107,7 @@
         var meta = registrator(function () {
           if (this.hasComponent(name)) {
             this._eventEmitter.emit.apply(this._eventEmitter, arguments);
+            this._pushEmitHistory(name, arguments[0]);
           } else {
             throw new Error('Try to emit event by unregistered component: [' + name + ']');
           }
