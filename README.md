@@ -5,23 +5,7 @@
 ## global : <code>object</code>
 **Kind**: global namespace  
 
-* [global](#global) : <code>object</code>
-  * [.Mediator](#global.Mediator)
-    * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
-    * _instance_
-      * [.addComponent(name, registrator)](#global.Mediator+addComponent)
-      * [.removeComponent(name)](#global.Mediator+removeComponent) ⇒ <code>boolean</code>
-      * [.hasComponent(name)](#global.Mediator+hasComponent) ⇒ <code>boolean</code>
-      * [.getComponent(name)](#global.Mediator+getComponent) ⇒ <code>Object</code>
-      * [.componentsList()](#global.Mediator+componentsList) ⇒ <code>Array</code>
-      * [.shareResponsibility(mediator)](#global.Mediator+shareResponsibility)
-      * [.toString()](#global.Mediator+toString) ⇒ <code>string</code>
-    * _static_
-      * [.EVENTS](#global.Mediator.EVENTS)
-        * [.ADD](#global.Mediator.EVENTS.ADD)
-        * [.REMOVE](#global.Mediator.EVENTS.REMOVE)
-
-* [.Mediator](#global.Mediator)
+* [Mediator](#global.Mediator)
   * [new Mediator(eventEmitter, setting)](#new_global.Mediator_new)
   * _instance_
     * [.addComponent(name, registrator)](#global.Mediator+addComponent)
